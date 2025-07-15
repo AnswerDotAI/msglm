@@ -2,6 +2,13 @@
 
 <!-- do not remove -->
 
+## 0.0.9
+
+### New Features
+
+- Auto handle empty text parts ([#12](https://github.com/AnswerDotAI/msglm/issues/12))
+
+
 ## 0.0.8
 
 ### New Features
