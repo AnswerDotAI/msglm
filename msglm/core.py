@@ -61,6 +61,7 @@ def img_msg(self:OpenAiMsg, data:bytes)->dict:
 @patch
 def text_msg(self:OpenAiMsg, s:str, text_only=False)->dict: 
     "Convert `s` to a text message"
+    if not s.strip(): s='.'
     return s if text_only else {"type": "input_text", "text":s}
 
 # %% ../nbs/00_core.ipynb
@@ -74,6 +75,7 @@ def img_msg(self:AnthropicMsg, data:bytes)->dict:
 @patch
 def text_msg(self:AnthropicMsg, s:str, text_only=False)->dict: 
     "Convert `s` to a text message"
+    if not s.strip(): s='.'
     return s if text_only else {"type": "text", "text":s}
 
 # %% ../nbs/00_core.ipynb
