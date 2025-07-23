@@ -41,14 +41,18 @@ class AnthropicMsg(Msg):
 def _is_img(data): return isinstance(data, bytes) and bool(imghdr.what(None, data))
 
 # %% ../nbs/00_core.ipynb
-def _is_pdf(data): return isinstance(data, bytes) and data.startswith(b'%PDF-')
+def _is_pdf(data): 
+    is_byte_pdf = isinstance(data, bytes) and data.startswith(b'%PDF-')
+    is_pdf_url = isinstance(data, str) and (data.startswith("http") and data.endswith(".pdf") or
+   'pdf' in data.split('/'))
+    return is_byte_pdf or is_pdf_url
 
 # %% ../nbs/00_core.ipynb
 @patch
 def mk_content(self:Msg, content, text_only=False)->dict:
-    if isinstance(content, str): return self.text_msg(content, text_only=text_only)
     if _is_img(content): return self.img_msg(content)
     if _is_pdf(content): return self.pdf_msg(content)
+    if isinstance(content, str): return self.text_msg(content, text_only=text_only)
     return content
 
 # %% ../nbs/00_core.ipynb
@@ -93,10 +97,14 @@ def _mk_pdf(data:bytes)->str:
 
 # %% ../nbs/00_core.ipynb
 @patch
-def pdf_msg(self:AnthropicMsg, data: bytes) -> dict:
+def pdf_msg(self:AnthropicMsg, data: bytes | str) -> dict:
     "Convert `data` to a pdf message"
-    r = {"type": "base64", "media_type": "application/pdf", "data":_mk_pdf(data)}
+    if isinstance(data, bytes):
+        r = {"type": "base64", "media_type": "application/pdf", "data":_mk_pdf(data)}
+    elif isinstance(data, str):
+        r = {"type": "url", "url": data}
     return {"type": "document", "source": r}
+
 
 # %% ../nbs/00_core.ipynb
 @patch
