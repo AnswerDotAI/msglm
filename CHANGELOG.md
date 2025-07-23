@@ -2,6 +2,13 @@
 
 <!-- do not remove -->
 
+## 0.0.10
+
+### New Features
+
+- Add support for PDFs by url ([#11](https://github.com/AnswerDotAI/msglm/pull/11)), thanks to [@sarahpannn](https://github.com/sarahpannn)
+
+
 ## 0.0.9
 
 ### New Features
