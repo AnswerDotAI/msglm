@@ -162,12 +162,14 @@ mk_msg_openai = partial(mk_msg, api="openai")
 mk_msgs_openai = partial(mk_msgs, api="openai")
 
 # %% ../nbs/00_core.ipynb
-def _add_cache_control(msg, cache=False):
-    "cache `msg`."
+def _add_cache_control(msg, cache=False, ttl=None):
+    "cache `msg` with optional ttl."
     if not cache: return msg
     if isinstance(msg["content"], str): msg["content"] = [{"type": "text", "text": msg["content"]}]
-    if isinstance(msg["content"][-1], dict): msg["content"][-1]["cache_control"] = {"type": "ephemeral"}
-    elif isinstance(msg["content"][-1], abc.Mapping): msg["content"][-1].cache_control = {"type": "ephemeral"}
+    cache_control = {"type": "ephemeral"}
+    if ttl is not None: cache_control["ttl"] = ttl
+    if isinstance(msg["content"][-1], dict): msg["content"][-1]["cache_control"] = cache_control
+    elif isinstance(msg["content"][-1], abc.Mapping): msg["content"][-1].cache_control = cache_control
     return msg
 
 def _remove_cache_ckpts(msg):
@@ -178,18 +180,18 @@ def _remove_cache_ckpts(msg):
     return msg
 
 @delegates(mk_msg)
-def mk_msg_anthropic(*args, cache=False, **kwargs):
+def mk_msg_anthropic(*args, cache=False, ttl=None, **kwargs):
     "Create an Anthropic compatible message."
     msg = partial(mk_msg, api="anthropic")(*args, **kwargs)
-    return _add_cache_control(msg, cache=cache)
+    return _add_cache_control(msg, cache=cache, ttl=ttl)
 
 @delegates(mk_msgs)
-def mk_msgs_anthropic(*args, cache=False, cache_last_ckpt_only=False, **kwargs):
+def mk_msgs_anthropic(*args, cache=False, ttl=None, cache_last_ckpt_only=False, **kwargs):
     "Create a list of Anthropic compatible messages."
     msgs = partial(mk_msgs, api="anthropic")(*args, **kwargs)
     if cache_last_ckpt_only: msgs = [_remove_cache_ckpts(m) for m in msgs]
     if not msgs: return msgs
-    msgs[-1] = _add_cache_control(msgs[-1], cache=cache)
+    msgs[-1] = _add_cache_control(msgs[-1], cache=cache, ttl=ttl)
     return msgs
 
 # %% ../nbs/00_core.ipynb
