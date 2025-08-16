@@ -2,6 +2,13 @@
 
 <!-- do not remove -->
 
+## 0.0.11
+
+### New Features
+
+- Add TTL support for Anthropic prompt caching ([#13](https://github.com/AnswerDotAI/msglm/pull/13)), thanks to [@radekosmulski](https://github.com/radekosmulski)
+
+
 ## 0.0.10
 
 ### New Features
