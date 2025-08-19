@@ -43,8 +43,9 @@ def _is_img(data): return isinstance(data, bytes) and bool(imghdr.what(None, dat
 # %% ../nbs/00_core.ipynb
 def _is_pdf(data): 
     is_byte_pdf = isinstance(data, bytes) and data.startswith(b'%PDF-')
-    is_pdf_url = isinstance(data, str) and (data.startswith("http") and data.endswith(".pdf") or
-   'pdf' in data.split('/'))
+    is_pdf_url = isinstance(data, str) and (
+        data.startswith("http") and (data.endswith(".pdf") or 'pdf' in data.split('/'))
+    )
     return is_byte_pdf or is_pdf_url
 
 # %% ../nbs/00_core.ipynb
