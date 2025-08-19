@@ -2,6 +2,14 @@
 
 <!-- do not remove -->
 
+## 0.0.12
+
+
+### Bugs Squashed
+
+- /pdf/ triggers pdf mode when it should not ([#14](https://github.com/AnswerDotAI/msglm/issues/14))
+
+
 ## 0.0.11
 
 ### New Features
