@@ -201,4 +201,7 @@ def mk_ant_doc(content, title=None, context=None, citation=True, **kws):
     if _is_pdf(content): src = {"type":"base64", "media_type":"application/pdf", "data":_mk_pdf(content)}
     elif isinstance(content,list): src = {"type":"content", "content":content}
     else: src = {"type":"text", "media_type":"text/plain", "data":content}
-    return {"type":"document", "source":src, "citations":{"enabled":citation}, "title":title, "context":context, **kws}
+    res = {"type":"document", "source":src, "citations":{"enabled":citation}, **kws}
+    if title: res["title"] = title
+    if context: res["context"] = context
+    return res
