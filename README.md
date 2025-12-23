@@ -33,7 +33,7 @@ Generating the correct format for a particular API can get tedious. The
 goal of *msglm* is to make it easier.
 
 The examples below will show you how to use *msglm* for text and image
-chats with OpenAI and Anthropic.
+chats with OpenAI, Azure/OpenAI and Anthropic.
 
 ### Text Chats
 
@@ -61,7 +61,7 @@ client = Anthropic()
 r = client.messages.create(
     model="claude-3-haiku-20240307",
     max_tokens=1024,
-    messages=[mk_msgs(["Hello, world!", "some LLM response"])]
+    messages=mk_msgs(["Hello, world!", "some LLM response"])
 )
 print(r.content[0].text)
 ```
@@ -75,7 +75,21 @@ from openai import OpenAI
 client = OpenAI()
 r = client.chat.completions.create(
   model="gpt-4o-mini",
-  messages=[mk_msgs(["Hello, world!", "some LLM response"])]
+  messages=mk_msgs(["Hello, world!", "some LLM response"])
+)
+print(r.choices[0].message.content)
+```
+
+#### azure/openai
+
+``` python
+from msglm import mk_msgs_azure as mk_msgs
+from openai import AzureOpenAI
+
+client = AzureOpenAI()
+r = client.chat.completions.create(
+  model="Gpt-4.1",
+  messages=mk_msgs(["Hello, world!", "some LLM response"])
 )
 print(r.choices[0].message.content)
 ```
@@ -139,6 +153,24 @@ r = client.chat.completions.create(
 print(r.choices[0].message.content)
 ```
 
+#### azure/openai
+
+``` python
+import httpx
+from msglm import mk_msg_azure as mk_msg
+from openai import AzureOpenAI
+
+img_url = "https://www.atshq.org/wp-content/uploads/2022/07/shutterstock_1626122512.jpg"
+img = httpx.get(img_url).content
+
+client = AzureOpenAI()
+r = client.chat.completions.create(
+  model="Gpt4.1",
+  messages=[mk_msg([img, "Describe the image"])]
+)
+print(r.choices[0].message.content)
+```
+
 ### API Wrappers
 
 To make life a little easier, msglm comes with api specific wrappers for
@@ -155,6 +187,12 @@ For OpenAI use
 
 ``` python
 from msglm import mk_msg_openai as mk_msg, mk_msgs_openai as mk_msgs
+```
+
+For Azure/OpenAI use
+
+``` python
+from msglm import mk_msg_azure as mk_msg, mk_msgs_azure as mk_msgs
 ```
 
 ### Other use-cases
