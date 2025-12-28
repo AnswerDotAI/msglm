@@ -2,6 +2,13 @@
 
 <!-- do not remove -->
 
+## 0.0.13
+
+### Bugs Squashed
+
+- Exclude empty title/context for anthropic ([#16](https://github.com/AnswerDotAI/msglm/issues/16))
+
+
 ## 0.0.12
 
 
