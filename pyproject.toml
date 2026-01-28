@@ -15,7 +15,7 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
 ]
-dependencies = []
+dependencies = ["fastcore"]
 
 [project.urls]
 Repository = "https://github.com/AnswerDotAI/msglm"
@@ -29,6 +29,9 @@ version = {attr = "msglm.__version__"}
 
 [tool.setuptools.packages.find]
 include = ["msglm"]
+
+[project.optional-dependencies]
+dev = ["openai","anthropic"]
 
 [tool.nbdev]
 custom_sidebar = false
