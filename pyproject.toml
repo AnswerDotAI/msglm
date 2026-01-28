@@ -3,19 +3,16 @@ requires = ["setuptools>=64"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name="msglm"
+name = "msglm"
 dynamic = ["version"]
 description = "msglm makes it a little easier to create messages for language models like Claude and OpenAI GPTs."
 readme = "README.md"
-requires-python=">=3.7"
+requires-python = ">=3.7"
 license = {text = "Apache-2.0"}
 authors = [{name = "Tommy", email = "tc@answer.ai"}]
 keywords = ['nbdev', 'jupyter', 'notebook', 'python']
-classifiers = [
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3 :: Only",
-]
-dependencies = ["fastcore"]
+classifiers = ["Natural Language :: English", "Intended Audience :: Developers", "Development Status :: 3 - Alpha", "Programming Language :: Python :: 3", "Programming Language :: Python :: 3 :: Only"]
+dependencies = ['fastcore']
 
 [project.urls]
 Repository = "https://github.com/AnswerDotAI/msglm"
@@ -24,14 +21,14 @@ Documentation = "https://AnswerDotAI.github.io/msglm"
 [project.entry-points.nbdev]
 msglm = "msglm._modidx:d"
 
+[project.optional-dependencies]
+dev = ['openai', 'anthropic']
+
 [tool.setuptools.dynamic]
 version = {attr = "msglm.__version__"}
 
 [tool.setuptools.packages.find]
 include = ["msglm"]
-
-[project.optional-dependencies]
-dev = ["openai","anthropic"]
 
 [tool.nbdev]
 custom_sidebar = false
