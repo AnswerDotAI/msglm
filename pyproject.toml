@@ -31,4 +31,5 @@ version = {attr = "msglm.__version__"}
 include = ["msglm"]
 
 [tool.nbdev]
+allowed_cell_metadata_keys = ["solveit_ai"]
 custom_sidebar = false
